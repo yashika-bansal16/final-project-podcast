@@ -38,32 +38,35 @@
     --gradient-primary: linear-gradient(135deg, hsl(261 83% 67%), hsl(217 91% 60%));
     --gradient-hero: linear-gradient(135deg, hsl(261 83% 67%) 0%, hsl(217 91% 60%) 50%, hsl(195 100% 50%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(240 10% 7%) 0%, hsl(240 8% 9%) 100%);
+    --gradient-glass: linear-gradient(145deg, hsl(240 10% 7% / 0.8) 0%, hsl(240 8% 9% / 0.9) 100%);
     --glow-primary: 0 0 30px hsl(261 83% 67% / 0.3);
     --glow-secondary: 0 0 30px hsl(217 91% 60% / 0.3);
+    --glow-success: 0 0 20px hsl(142 76% 36% / 0.3);
     --shadow-elegant: 0 10px 30px -5px hsl(261 83% 67% / 0.2);
+    --shadow-soft: 0 4px 20px -2px hsl(240 10% 3.9% / 0.3);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     /* Audio Player Colors */
     --audio-bg: hsl(240 8% 12%);
     --audio-progress: hsl(261 83% 67%);
     --audio-track: hsl(240 6% 20%);
+    
+    /* Status Colors */
+    --status-success: hsl(142 76% 36%);
+    --status-warning: hsl(38 92% 50%);
+    --status-error: hsl(0 84% 60%);
+    --status-info: hsl(217 91% 60%);
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -114,4 +117,16 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Animation delay utilities */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+  .animation-delay-800 { animation-delay: 800ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+  .animation-delay-1500 { animation-delay: 1500ms; }
 }
