@@ -67,7 +67,9 @@ export const TextToSpeech = ({ script, onAudioGenerated }: TextToSpeechProps) =>
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate audio");
+        const errorText = await response.text();
+        console.error("ElevenLabs API Error:", response.status, errorText);
+        throw new Error(`Failed to generate audio: ${response.status} - ${errorText}`);
       }
 
       const audioBlob = await response.blob();
@@ -83,9 +85,23 @@ export const TextToSpeech = ({ script, onAudioGenerated }: TextToSpeechProps) =>
       
     } catch (error) {
       console.error("Error generating audio:", error);
+      let errorMessage = "Failed to generate audio. Please check your API key and try again.";
+      
+      if (error instanceof Error) {
+        if (error.message.includes("401")) {
+          errorMessage = "Invalid API key. Please check your ElevenLabs API key.";
+        } else if (error.message.includes("403")) {
+          errorMessage = "API key doesn't have permission. Please check your ElevenLabs subscription.";
+        } else if (error.message.includes("429")) {
+          errorMessage = "Rate limit exceeded. Please try again in a moment.";
+        } else if (error.message.includes("NetworkError") || error.message.includes("CORS")) {
+          errorMessage = "Network error. Please check your internet connection.";
+        }
+      }
+      
       toast({
         title: "Generation Failed",
-        description: "Failed to generate audio. Please check your API key and try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
