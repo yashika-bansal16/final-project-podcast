@@ -7,11 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2, FileText, Sparkles, Wand2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface ScriptGeneratorProps {
-  onScriptGenerated: (script: string, title: string) => void;
-}
-
-export const ScriptGenerator = ({ onScriptGenerated }: ScriptGeneratorProps) => {
+export const ScriptGenerator = ({ onScriptGenerated }) => {
   const [topic, setTopic] = useState("");
   const [duration, setDuration] = useState("10");
   const [tone, setTone] = useState("conversational");

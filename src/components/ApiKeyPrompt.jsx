@@ -6,11 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Shield, Key, AlertTriangle, CheckCircle, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface ApiKeyPromptProps {
-  onKeysSet: () => void;
-}
-
-export const ApiKeyPrompt = ({ onKeysSet }: ApiKeyPromptProps) => {
+export const ApiKeyPrompt = ({ onKeysSet }) => {
   const [openaiKey, setOpenaiKey] = useState("");
   const [elevenlabsKey, setElevenlabsKey] = useState("");
   const { toast } = useToast();
