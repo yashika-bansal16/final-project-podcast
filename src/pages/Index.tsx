@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PodcastHero } from "@/components/PodcastHero";
 import { ApiKeyPrompt } from "@/components/ApiKeyPrompt";
 import { ScriptGenerator } from "@/components/ScriptGenerator";
@@ -22,19 +22,32 @@ interface Episode {
 const Index = () => {
   const [showDashboard, setShowDashboard] = useState(false);
   const [showApiPrompt, setShowApiPrompt] = useState(false);
+  const [hasApiKeys, setHasApiKeys] = useState(false);
   const [currentScript, setCurrentScript] = useState("");
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentAudioUrl, setCurrentAudioUrl] = useState("");
   const [newEpisode, setNewEpisode] = useState<{script: string; title: string; audioUrl?: string} | undefined>();
   const [activeTab, setActiveTab] = useState("create");
 
-  // Check if API keys exist
-  const hasApiKeys = () => {
-    return localStorage.getItem("openai_api_key") && localStorage.getItem("elevenlabs_api_key");
-  };
+  // Check API keys on mount and when localStorage changes
+  useEffect(() => {
+    const checkApiKeys = () => {
+      const openaiKey = localStorage.getItem("openai_api_key");
+      const elevenlabsKey = localStorage.getItem("elevenlabs_api_key");
+      setHasApiKeys(!!openaiKey && !!elevenlabsKey);
+    };
+
+    checkApiKeys();
+    
+    // Listen for storage changes
+    const handleStorageChange = () => checkApiKeys();
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const handleGetStarted = () => {
-    if (!hasApiKeys()) {
+    if (!hasApiKeys) {
       setShowApiPrompt(true);
     } else {
       setShowDashboard(true);
@@ -42,6 +55,7 @@ const Index = () => {
   };
 
   const handleApiKeysSet = () => {
+    setHasApiKeys(true);
     setShowApiPrompt(false);
     setShowDashboard(true);
   };

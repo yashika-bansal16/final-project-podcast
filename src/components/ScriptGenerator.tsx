@@ -48,7 +48,7 @@ export const ScriptGenerator = ({ onScriptGenerated }: ScriptGeneratorProps) => 
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "gpt-4",
+          model: "gpt-4o-mini",
           messages: [
             {
               role: "system",
