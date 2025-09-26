@@ -6,22 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Play, Trash2, Edit3, Download, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface Episode {
-  id: string;
-  title: string;
-  script: string;
-  audioUrl?: string;
-  createdAt: string;
-  status: "script" | "audio" | "complete";
-}
-
-interface EpisodeManagerProps {
-  onSelectEpisode: (episode: Episode) => void;
-  newEpisode?: { script: string; title: string; audioUrl?: string };
-}
-
-export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerProps) => {
-  const [episodes, setEpisodes] = useState<Episode[]>([]);
+export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
@@ -41,7 +26,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerPr
   // Add new episode when newEpisode prop changes
   useEffect(() => {
     if (newEpisode) {
-      const episode: Episode = {
+      const episode = {
         id: Date.now().toString(),
         title: newEpisode.title,
         script: newEpisode.script,
@@ -59,7 +44,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerPr
     }
   }, [newEpisode, toast]);
 
-  const deleteEpisode = (id: string) => {
+  const deleteEpisode = (id) => {
     setEpisodes(prev => prev.filter(episode => episode.id !== id));
     toast({
       title: "Episode Deleted",
@@ -67,10 +52,10 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerPr
     });
   };
 
-  const updateEpisodeAudio = (id: string, audioUrl: string) => {
+  const updateEpisodeAudio = (id, audioUrl) => {
     setEpisodes(prev => prev.map(episode => 
       episode.id === id 
-        ? { ...episode, audioUrl, status: "complete" as const }
+        ? { ...episode, audioUrl, status: "complete" }
         : episode
     ));
   };
@@ -80,7 +65,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerPr
     episode.script.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatusColor = (status: Episode["status"]) => {
+  const getStatusColor = (status) => {
     switch (status) {
       case "script": return "bg-yellow-500/10 text-yellow-500 border-yellow-500/20";
       case "audio": return "bg-blue-500/10 text-blue-500 border-blue-500/20";
@@ -89,7 +74,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerPr
     }
   };
 
-  const downloadEpisode = (episode: Episode) => {
+  const downloadEpisode = (episode) => {
     if (!episode.audioUrl) return;
     
     const link = document.createElement("a");

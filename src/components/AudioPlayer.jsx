@@ -4,17 +4,12 @@ import { Card } from "@/components/ui/card";
 import { Play, Pause, Download, Volume2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
-interface AudioPlayerProps {
-  audioUrl?: string;
-  title?: string;
-}
-
-export const AudioPlayer = ({ audioUrl, title = "Untitled Episode" }: AudioPlayerProps) => {
+export const AudioPlayer = ({ audioUrl, title = "Untitled Episode" }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState([75]);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -52,14 +47,14 @@ export const AudioPlayer = ({ audioUrl, title = "Untitled Episode" }: AudioPlaye
     setIsPlaying(!isPlaying);
   };
 
-  const handleSeek = (value: number[]) => {
+  const handleSeek = (value) => {
     if (audioRef.current) {
       audioRef.current.currentTime = value[0];
       setCurrentTime(value[0]);
     }
   };
 
-  const formatTime = (time: number) => {
+  const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
