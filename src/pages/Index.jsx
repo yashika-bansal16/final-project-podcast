@@ -56,14 +56,14 @@ const Index = () => {
     setShowApiPrompt(false);
   };
 
-  const handleScriptGenerated = (script: string, title: string) => {
+  const handleScriptGenerated = (script, title) => {
     setCurrentScript(script);
     setCurrentTitle(title);
     setNewEpisode({ script, title });
     setActiveTab("voice");
   };
 
-  const handleAudioGenerated = (audioUrl: string, title: string) => {
+  const handleAudioGenerated = (audioUrl, title) => {
     setCurrentAudioUrl(audioUrl);
     setNewEpisode(prev => prev ? { ...prev, audioUrl } : { script: currentScript, title: currentTitle, audioUrl });
     setActiveTab("preview");
