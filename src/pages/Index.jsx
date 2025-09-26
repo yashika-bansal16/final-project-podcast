@@ -10,15 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Settings } from "lucide-react";
 
-interface Episode {
-  id: string;
-  title: string;
-  script: string;
-  audioUrl?: string;
-  createdAt: string;
-  status: "script" | "audio" | "complete";
-}
-
 const Index = () => {
   const [showDashboard, setShowDashboard] = useState(false);
   const [showApiPrompt, setShowApiPrompt] = useState(false);
@@ -26,7 +17,7 @@ const Index = () => {
   const [currentScript, setCurrentScript] = useState("");
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentAudioUrl, setCurrentAudioUrl] = useState("");
-  const [newEpisode, setNewEpisode] = useState<{script: string; title: string; audioUrl?: string} | undefined>();
+  const [newEpisode, setNewEpisode] = useState(undefined);
   const [activeTab, setActiveTab] = useState("create");
 
   // Check API keys on mount and when localStorage changes
@@ -78,7 +69,7 @@ const Index = () => {
     setActiveTab("preview");
   };
 
-  const handleSelectEpisode = (episode: Episode) => {
+  const handleSelectEpisode = (episode) => {
     setCurrentScript(episode.script);
     setCurrentTitle(episode.title);
     setCurrentAudioUrl(episode.audioUrl || "");

@@ -1,11 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { AudioWaveform, Sparkles, Zap, Star, ArrowRight } from "lucide-react";
 
-interface PodcastHeroProps {
-  onGetStarted: () => void;
-}
+export const PodcastHero = ({ onGetStarted }) => {
 
-export const PodcastHero = ({ onGetStarted }: PodcastHeroProps) => {
+  const handleViewExamples = () => {
+    // Create sample episodes for demonstration
+    const sampleEpisodes = [
+      {
+        id: 'sample-1',
+        title: 'The Future of AI in Education',
+        script: 'Welcome to our podcast on artificial intelligence in education. Today we explore how AI is transforming the way we learn and teach, making education more personalized and accessible than ever before.',
+        audioUrl: '',
+        createdAt: new Date().toISOString(),
+        status: 'script'
+      },
+      {
+        id: 'sample-2', 
+        title: 'Climate Change Solutions',
+        script: 'In this episode, we discuss innovative solutions to combat climate change, from renewable energy breakthroughs to sustainable lifestyle changes that every individual can make.',
+        audioUrl: '',
+        createdAt: new Date().toISOString(),
+        status: 'script'
+      }
+    ];
+
+    // Store sample episodes in localStorage for demo
+    localStorage.setItem('sample_episodes', JSON.stringify(sampleEpisodes));
+    
+    // Navigate to dashboard
+    onGetStarted();
+  };
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
@@ -75,6 +100,7 @@ export const PodcastHero = ({ onGetStarted }: PodcastHeroProps) => {
           <Button 
             variant="outline" 
             size="lg"
+            onClick={handleViewExamples}
             className="px-10 py-5 text-xl border-white/30 hover:bg-white/10 backdrop-blur-sm bg-white/5 transition-smooth hover:shadow-soft"
           >
             View Examples
