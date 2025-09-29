@@ -7,7 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Mic2, Download, Volume2, CheckCircle, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export const TextToSpeech = ({ script, onAudioGenerated }) => {
+interface TextToSpeechProps {
+  script?: string;
+  onAudioGenerated: (audioUrl: string, title: string) => void;
+}
+
+export const TextToSpeech = ({ script, onAudioGenerated }: TextToSpeechProps) => {
   const [text, setText] = useState(script || "");
   const [voice, setVoice] = useState("9BWtsMINqrJLrRacOk9x"); // Aria voice ID
   const [isGenerating, setIsGenerating] = useState(false);

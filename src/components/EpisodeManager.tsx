@@ -6,7 +6,22 @@ import { Badge } from "@/components/ui/badge";
 import { Play, Trash2, Edit3, Download, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
+interface Episode {
+  id: string;
+  title: string;
+  script: string;
+  audioUrl?: string;
+  createdAt: string;
+  status: "script" | "audio" | "complete";
+}
+
+interface EpisodeManagerProps {
+  onSelectEpisode: (episode: Episode) => void;
+  newEpisode?: { script: string; title: string; audioUrl?: string };
+}
+
+export const EpisodeManager = ({ onSelectEpisode, newEpisode }: EpisodeManagerProps) => {
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
@@ -26,7 +41,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
   // Add new episode when newEpisode prop changes
   useEffect(() => {
     if (newEpisode) {
-      const episode = {
+      const episode: Episode = {
         id: Date.now().toString(),
         title: newEpisode.title,
         script: newEpisode.script,
@@ -44,7 +59,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
     }
   }, [newEpisode, toast]);
 
-  const deleteEpisode = (id) => {
+  const deleteEpisode = (id: string) => {
     setEpisodes(prev => prev.filter(episode => episode.id !== id));
     toast({
       title: "Episode Deleted",
@@ -52,10 +67,10 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
     });
   };
 
-  const updateEpisodeAudio = (id, audioUrl) => {
+  const updateEpisodeAudio = (id: string, audioUrl: string) => {
     setEpisodes(prev => prev.map(episode => 
       episode.id === id 
-        ? { ...episode, audioUrl, status: "complete" }
+        ? { ...episode, audioUrl, status: "complete" as const }
         : episode
     ));
   };
@@ -65,7 +80,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
     episode.script.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: Episode["status"]) => {
     switch (status) {
       case "script": return "bg-yellow-500/10 text-yellow-500 border-yellow-500/20";
       case "audio": return "bg-blue-500/10 text-blue-500 border-blue-500/20";
@@ -74,7 +89,7 @@ export const EpisodeManager = ({ onSelectEpisode, newEpisode }) => {
     }
   };
 
-  const downloadEpisode = (episode) => {
+  const downloadEpisode = (episode: Episode) => {
     if (!episode.audioUrl) return;
     
     const link = document.createElement("a");
